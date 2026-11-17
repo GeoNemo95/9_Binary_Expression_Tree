@@ -133,7 +133,7 @@ class BinaryExpressionTree(LinkedBinaryTree):
             return False
     
     @classmethod
-    def from_postfix(cls,expression):
+    def postfix(cls,expression):
         if not isinstance(expression, str) or not expression.strip():
             raise ValueError(Postfix cannot be enpty)
         tokens = expression.split()
@@ -173,7 +173,7 @@ class BinaryExpressionTree(LinkedBinaryTree):
                 return left_val + right_val
             if op == "-":
                 return left_val - right_val
-            if op == "^":
+            if op == "*":
                 return left_val * right_val
             if op == "/":
                 return left_val / right_val
@@ -183,3 +183,15 @@ class BinaryExpressionTree(LinkedBinaryTree):
     def infix(self):
         if self.is_empty():
             raise ValueError("Cannot format an empty tree")
+
+        def _format(p):
+            if self.is_leaf(p):
+                return str(p.element())
+            left_str = _format(self.left(p))
+            right_str = )format(self.right(p))
+            return f"({left_str} {p.element()} {right_str})"
+
+        return _format(self.root())
+
+    def __str__(self):
+        return self.infix() if not self.is_empty() else ""
