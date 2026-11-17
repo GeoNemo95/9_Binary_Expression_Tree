@@ -3,28 +3,28 @@ class Stack:
 
     def __init__(self):
         """Initialize empty stack"""
-        self._items = []
+        self._objects = []
 
     def is_empty(self) -> bool:
         """Return True if stack contains no elements, otherwise False"""
-        return len(self._items) == 0
+        return len(self._objects) == 0
 
     def push(self, item) -> None:
         """Add item to top of stack"""
-        self._items.append(item)
+        self._objects.append(item)
 
     def pop(self):
         """Remove and return item to top of stack"""
         if self.is_empty():
             raise IndexError("pop from an empty stack")
-        return self._items.pop()
+        return self._objects.pop()
 
     def peek(self):
         """Return item to top of stack without removal"""
         if self.is_empty():
             raise IndexError("peek from an empty stack")
-        return self._items[-1]
+        return self._objects[-1]
 
     def size(self) -> int:
         """Return number of elements in current stack"""
-        return len(self._items)
+        return len(self._objects)
