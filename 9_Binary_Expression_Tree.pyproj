@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>58dc4bbe-bb3f-40d4-92d2-200c85b97a0e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>stack.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

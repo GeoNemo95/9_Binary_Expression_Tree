@@ -122,7 +122,7 @@ class LinkedBinaryTree:
 class BinaryExpressionTree(LinkedBinaryTree):
     Operators = {"+","-","*","/"}
 
-     @staticmethod
+    @staticmethod
     def _is_number(token):
         if token.lower() in {"nan", "inf", "+inf", "-inf", "infinity", "+infinity", "-infinity"}:
             return False
@@ -135,7 +135,7 @@ class BinaryExpressionTree(LinkedBinaryTree):
     @classmethod
     def postfix(cls,expression):
         if not isinstance(expression, str) or not expression.strip():
-            raise ValueError(Postfix cannot be enpty)
+            raise ValueError("Postfix cannot be enpty")
         tokens = expression.split()
         stack = Stack()
         for token in tokens:
@@ -146,11 +146,11 @@ class BinaryExpressionTree(LinkedBinaryTree):
             elif token in cls.Operators:
                 if len(stack) < 2:
                     raise ValueError(f"Bad Postfix, insufficient operands for '{token}'")
-                left_subtree = stack.pop()
                 right_subtree = stack.pop()
+                left_subtree = stack.pop()
                 oper_tree = cls()
                 oper_root = oper_tree.add_root(token)
-                op_tree.attach_subtrees(oper_root, left_subtree, right_subtree)
+                oper_tree.attach_subtrees(oper_root, left_subtree, right_subtree)
                 stack.push(oper_tree)
             else:
                 raise ValueError(f"Bad token in postfix: '{token}'")
@@ -162,7 +162,7 @@ class BinaryExpressionTree(LinkedBinaryTree):
         if self.is_empty():
             raise ValueError("Can't evaluate an empty tree")
 
-        def judge(p)
+        def _judge(p):
             if self.is_leaf(p):
                 return float(p.element())
             left_val = _judge(self.left(p))
@@ -188,7 +188,7 @@ class BinaryExpressionTree(LinkedBinaryTree):
             if self.is_leaf(p):
                 return str(p.element())
             left_str = _format(self.left(p))
-            right_str = )format(self.right(p))
+            right_str = _format(self.right(p))
             return f"({left_str} {p.element()} {right_str})"
 
         return _format(self.root())
