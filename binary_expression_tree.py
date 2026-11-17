@@ -124,8 +124,6 @@ class BinaryExpressionTree(LinkedBinaryTree):
 
     @staticmethod
     def _is_number(token):
-        if token.lower() in {"nan", "inf", "+inf", "-inf", "infinity", "+infinity", "-infinity"}:
-            return False
         try:
             float(token)
             return True
@@ -176,6 +174,8 @@ class BinaryExpressionTree(LinkedBinaryTree):
             if op == "*":
                 return left_val * right_val
             if op == "/":
+                if right_val == 0.0:
+                    raise ValueError("Can't Divide by Zeor")
                 return left_val / right_val
 
         return _judge(self.root())
