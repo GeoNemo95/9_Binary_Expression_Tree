@@ -175,7 +175,7 @@ class BinaryExpressionTree(LinkedBinaryTree):
                 return left_val * right_val
             if op == "/":
                 if right_val == 0.0:
-                    raise ValueError("Can't Divide by Zeor")
+                    raise ValueError("Can't Divide by Zero")
                 return left_val / right_val
 
         return _judge(self.root())
