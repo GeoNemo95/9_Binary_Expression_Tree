@@ -1,7 +1,7 @@
 from collections import deque
 from stack import Stack
 
-class BinaryTree:
+class LinkedBinaryTree:
     class _Node:
         def __init__(self, element, parent=None):
             self.element = element
@@ -68,6 +68,7 @@ class BinaryTree:
         return self._make_position(n.right)
 
     def attach_subtrees(self, p, left_tree, right_tree):
+        """Transfers subtrees to other trees and without duplicating them"""
         node = self._validate(p)
         if not self.is_leaf(p):
             raise ValueError("Target position must be a leaf")
@@ -116,3 +117,69 @@ class BinaryTree:
             for child in (self.left(p), self.right(p)):
                 if child is not None:
                     q.append(child)
+
+
+class BinaryExpressionTree(LinkedBinaryTree):
+    Operators = {"+","-","*","/"}
+
+     @staticmethod
+    def _is_number(token):
+        if token.lower() in {"nan", "inf", "+inf", "-inf", "infinity", "+infinity", "-infinity"}:
+            return False
+        try:
+            float(token)
+            return True
+        except ValueError:
+            return False
+    
+    @classmethod
+    def from_postfix(cls,expression):
+        if not isinstance(expression, str) or not expression.strip():
+            raise ValueError(Postfix cannot be enpty)
+        tokens = expression.split()
+        stack = Stack()
+        for token in tokens:
+            if cls._is_number(token):
+                math_tree = cls()
+                math_tree.add_root(token)
+                stack.push(math_tree)
+            elif token in cls.Operators:
+                if len(stack) < 2:
+                    raise ValueError(f"Bad Postfix, insufficient operands for '{token}'")
+                left_subtree = stack.pop()
+                right_subtree = stack.pop()
+                oper_tree = cls()
+                oper_root = oper_tree.add_root(token)
+                op_tree.attach_subtrees(oper_root, left_subtree, right_subtree)
+                stack.push(oper_tree)
+            else:
+                raise ValueError(f"Bad token in postfix: '{token}'")
+        if len(stack) != 1:
+            raise ValueError("Bad Postfix: too many operands left")
+        return stack.pop()
+
+    def evaluate(self):
+        if self.is_empty():
+            raise ValueError("Can't evaluate an empty tree")
+
+        def judge(p)
+            if self.is_leaf(p):
+                return float(p.element())
+            left_val = _judge(self.left(p))
+            right_val = _judge(self.right(p))
+            op = p.element()
+
+            if op == "+":
+                return left_val + right_val
+            if op == "-":
+                return left_val - right_val
+            if op == "^":
+                return left_val * right_val
+            if op == "/":
+                return left_val / right_val
+
+        return _judge(self.root())
+
+    def infix(self):
+        if self.is_empty():
+            raise ValueError("Cannot format an empty tree")
